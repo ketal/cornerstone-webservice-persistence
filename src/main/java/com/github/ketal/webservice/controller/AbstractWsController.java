@@ -22,44 +22,39 @@ import com.github.ketal.persistence.jpa.controller.JpaController;
 import com.github.ketal.webservice.exception.NonExistingEntityException;
 import com.github.ketal.webservice.exception.PreExistingEntityException;
 
-public abstract class AbstractWsController<T, E, C> implements WsController<T> {
+public abstract class AbstractWsController<T, E> implements WsController<T> {
 
-    protected C config;
-    
-    protected AbstractWsController(C config) {
-        this.config = config;
-    }
-    
+    private static final String NON_EXISTING_ENTITY_ERROR = "Could not find Entity with id: ";
+
     /*
      * return instance of JpaController
      */
-    abstract protected JpaController<E> getJpaController();
+    protected abstract JpaController<E> getJpaController();
 
     /*
      * Finds and returns entity based on given DO object.
      * 
      *  Find entity based on unique properties.
-     *  For example: 
-     *      jpaController.findBy(Persona_.username, personaDO.getUsername());
+     *  For example:  use jpaController to call findBy() using meta model fields like Persona_.username and value to search
      */
-    abstract protected List<E> findPreExistingEntity(T object);
+    protected abstract List<E> findPreExistingEntity(T object);
 
     /*
      * Convert given Entity object to DO object.
      *  - convertRelationships: if true, convert and add  OneToMany and/or ManyToMany relationships
      */
-    abstract protected T convertEntity(E object, boolean convertRelationships);
+    protected abstract T convertEntity(E object, boolean convertRelationships);
 
     /*
      * Convert given DO object to Entity object.
      */
-    abstract protected E convertDO(T object);
+    protected abstract E convertDO(T object);
 
     /*
      * Convert given DO object to given Entity object
      * returns the passed in entity parameter after the conversion 
      */
-    abstract protected E convertDO(T object, E entity);
+    protected abstract E convertDO(T object, E entity);
 
     @Override
     public int post(T object) throws Exception {
@@ -78,18 +73,17 @@ public abstract class AbstractWsController<T, E, C> implements WsController<T> {
     public T get(int id) throws Exception {
         E entity = getJpaController().find(id);
         if (entity == null) {
-            throw new NonExistingEntityException("Could not find Entity with id '" + id + "'");
+            throw new NonExistingEntityException(NON_EXISTING_ENTITY_ERROR + id);
         }
 
-        T object = convertEntity(entity, true);
-        return object;
+        return convertEntity(entity, true);
     }
 
     @Override
     public void put(int id, T object) throws Exception {
         E entity = getJpaController().find(id);
         if (entity == null) {
-            throw new NonExistingEntityException("Could not find Entity with id '" + id + "'");
+            throw new NonExistingEntityException(NON_EXISTING_ENTITY_ERROR + id);
         }
 
         entity = convertDO(object, entity);
@@ -100,7 +94,7 @@ public abstract class AbstractWsController<T, E, C> implements WsController<T> {
     public void delete(int id) throws Exception {
         E entity = getJpaController().find(id);
         if (entity == null) {
-            throw new NonExistingEntityException("Could not find Entity with id '" + id + "'");
+            throw new NonExistingEntityException(NON_EXISTING_ENTITY_ERROR + id);
         }
 
         getJpaController().delete(entity);

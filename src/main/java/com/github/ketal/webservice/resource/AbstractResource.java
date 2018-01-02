@@ -44,11 +44,9 @@ public abstract class AbstractResource<T, E extends WsController<T>> {
     @Context
     protected UriInfo uri;
 
-    protected E controller;
+    protected abstract String getUriPath();
 
-    abstract protected String getUriPath();
-
-    abstract protected E getController();
+    protected abstract E getController();
 
     @POST
     public Response post(@Valid T object) throws Exception {
