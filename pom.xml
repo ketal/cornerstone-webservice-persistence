@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.ketal</groupId>
-    <artifactId>webservice-persistence</artifactId>
+    <artifactId>cornerstone-webservice-persistence</artifactId>
     <packaging>jar</packaging>
-    <name>webservice-persistence</name>
+    <name>cornerstone-webservice-persistence</name>
     <version>1.0.0-SNAPSHOT</version>
     <description>Library to build web service controllers. Provides CRUD functionality of business logic between rest and persistence.</description>
 
@@ -180,13 +180,13 @@
         <dependencies>
             <dependency>
                 <groupId>com.github.ketal</groupId>
-                <artifactId>webservice-base</artifactId>
+                <artifactId>cornerstone-webservice</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>com.github.ketal</groupId>
-                <artifactId>persistence-base</artifactId>
+                <artifactId>cornerstone-persistence</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
                 <scope>compile</scope>
             </dependency>
@@ -217,11 +217,11 @@
     <dependencies>
         <dependency>
             <groupId>com.github.ketal</groupId>
-            <artifactId>webservice-base</artifactId>
+            <artifactId>cornerstone-webservice</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.ketal</groupId>
-            <artifactId>persistence-base</artifactId>
+            <artifactId>cornerstone-persistence</artifactId>
         </dependency>
 
         <dependency>
