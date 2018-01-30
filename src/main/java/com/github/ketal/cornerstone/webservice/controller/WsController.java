@@ -14,22 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ketal.webservice.exception.mapper;
+package com.github.ketal.cornerstone.webservice.controller;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.ext.Provider;
+public interface WsController<T> {
 
-import com.github.ketal.webservice.exception.PreExistingEntityException;
-import com.github.ketal.webservice.exception.mapper.AbstractExceptionMapper;
-
-@Provider
-public class PreExistingEntityExceptionMapper extends AbstractExceptionMapper<PreExistingEntityException> {
-
-    @Override
-    protected ResponseBuilder getResponseBuilder() {
-        return Response.status(Status.CONFLICT);
-    }
+    public int post(T entity) throws Exception;
+    public T get(int id) throws Exception;
+    public void put(int id, T entity) throws Exception;
+    public void delete(int id) throws Exception;
 
 }

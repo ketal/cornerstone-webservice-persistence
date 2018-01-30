@@ -14,28 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ketal.webservice.exception;
+package com.github.ketal.cornerstone.webservice.exception.mapper;
 
-public class PreExistingEntityException extends Exception {
-    private static final long serialVersionUID = 1L;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.ext.Provider;
 
-    public PreExistingEntityException() {
-        super();
+import com.github.ketal.cornerstone.webservice.exception.PreExistingEntityException;
+import com.github.ketal.cornerstone.webservice.exception.mapper.AbstractExceptionMapper;
+
+@Provider
+public class PreExistingEntityExceptionMapper extends AbstractExceptionMapper<PreExistingEntityException> {
+
+    @Override
+    protected ResponseBuilder getResponseBuilder() {
+        return Response.status(Status.CONFLICT);
     }
 
-    public PreExistingEntityException(String message) {
-        super(message);
-    }
-
-    public PreExistingEntityException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public PreExistingEntityException(Throwable cause) {
-        super(cause);
-    }
-
-    protected PreExistingEntityException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

@@ -14,28 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ketal.webservice.exception;
+package com.github.ketal.cornerstone.webservice.exception;
 
-public class NonExistingEntityException extends Exception {
+public class PreExistingEntityException extends Exception {
     private static final long serialVersionUID = 1L;
 
-    public NonExistingEntityException() {
+    public PreExistingEntityException() {
         super();
     }
 
-    public NonExistingEntityException(String message) {
+    public PreExistingEntityException(String message) {
         super(message);
     }
 
-    public NonExistingEntityException(String message, Throwable cause) {
+    public PreExistingEntityException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public NonExistingEntityException(Throwable cause) {
+    public PreExistingEntityException(Throwable cause) {
         super(cause);
     }
 
-    protected NonExistingEntityException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected PreExistingEntityException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

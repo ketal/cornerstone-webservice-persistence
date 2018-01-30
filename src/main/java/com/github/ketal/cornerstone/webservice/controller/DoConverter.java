@@ -14,20 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ketal.webservice.exception.mapper;
+package com.github.ketal.cornerstone.webservice.controller;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.ext.Provider;
+public interface DoConverter<T, E> {
 
-import com.github.ketal.webservice.exception.NonExistingEntityException;
-
-@Provider
-public class NonExistingEntityExceptionMapper extends AbstractExceptionMapper<NonExistingEntityException> {
-
-    @Override
-    protected ResponseBuilder getResponseBuilder() {
-        return Response.status(Status.NOT_FOUND);
-    }
+    public T convert(E entity, boolean expandChild);
+    public E convert(T object);
+    public E convert(T object, E entity);
+    
 }

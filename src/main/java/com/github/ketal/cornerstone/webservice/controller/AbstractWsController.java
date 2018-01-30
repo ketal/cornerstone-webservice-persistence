@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ketal.webservice.controller;
+package com.github.ketal.cornerstone.webservice.controller;
 
 import java.util.List;
 
-import com.github.ketal.persistence.jpa.controller.JpaController;
-import com.github.ketal.webservice.exception.NonExistingEntityException;
-import com.github.ketal.webservice.exception.PreExistingEntityException;
+import com.github.ketal.cornerstone.persistence.jpa.controller.JpaController;
+import com.github.ketal.cornerstone.webservice.exception.NonExistingEntityException;
+import com.github.ketal.cornerstone.webservice.exception.PreExistingEntityException;
 
 public abstract class AbstractWsController<T, E> implements WsController<T> {
 

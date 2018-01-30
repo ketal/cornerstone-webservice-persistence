@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ketal.webservice.resource;
+package com.github.ketal.cornerstone.webservice.resource;
 
 import java.net.URI;
 
@@ -30,8 +30,8 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.github.ketal.webservice.controller.WsController;
-import com.github.ketal.webservice.util.WSResponse;
+import com.github.ketal.cornerstone.webservice.controller.WsController;
+import com.github.ketal.cornerstone.webservice.util.WSResponse;
 
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;

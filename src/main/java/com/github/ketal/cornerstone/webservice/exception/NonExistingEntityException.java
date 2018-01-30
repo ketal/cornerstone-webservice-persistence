@@ -14,13 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ketal.webservice.controller;
+package com.github.ketal.cornerstone.webservice.exception;
 
-public interface WsController<T> {
+public class NonExistingEntityException extends Exception {
+    private static final long serialVersionUID = 1L;
 
-    public int post(T entity) throws Exception;
-    public T get(int id) throws Exception;
-    public void put(int id, T entity) throws Exception;
-    public void delete(int id) throws Exception;
+    public NonExistingEntityException() {
+        super();
+    }
 
+    public NonExistingEntityException(String message) {
+        super(message);
+    }
+
+    public NonExistingEntityException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public NonExistingEntityException(Throwable cause) {
+        super(cause);
+    }
+
+    protected NonExistingEntityException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 }
