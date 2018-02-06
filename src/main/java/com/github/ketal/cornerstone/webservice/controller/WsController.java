@@ -19,8 +19,8 @@ package com.github.ketal.cornerstone.webservice.controller;
 public interface WsController<T> {
 
     public int post(T entity) throws Exception;
-    public T get(int id) throws Exception;
-    public void put(int id, T entity) throws Exception;
-    public void delete(int id) throws Exception;
+    public T get(Object id) throws Exception;
+    public void put(Object id, T entity) throws Exception;
+    public void delete(Object id) throws Exception;
 
 }

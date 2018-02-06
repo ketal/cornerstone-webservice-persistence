@@ -25,7 +25,7 @@ import com.github.ketal.cornerstone.webservice.exception.PreExistingEntityExcept
 public abstract class AbstractWsController<T, E> implements WsController<T> {
 
     private static final String NON_EXISTING_ENTITY_ERROR = "Could not find Entity with id: ";
-
+    
     /*
      * return instance of JpaController
      */
@@ -43,19 +43,19 @@ public abstract class AbstractWsController<T, E> implements WsController<T> {
      * Convert given Entity object to DO object.
      *  - convertRelationships: if true, convert and add  OneToMany and/or ManyToMany relationships
      */
-    protected abstract T convertEntity(E object, boolean convertRelationships);
+    protected abstract T convertToDO(E object, boolean convertRelationships);
 
     /*
      * Convert given DO object to Entity object.
      */
-    protected abstract E convertDO(T object);
+    protected abstract E convertToEntity(T object);
 
     /*
      * Convert given DO object to given Entity object
      * returns the passed in entity parameter after the conversion 
      */
-    protected abstract E convertDO(T object, E entity);
-
+    protected abstract E convertToEntity(T object, E entity);
+    
     @Override
     public int post(T object) throws Exception {
         List<E> entities = findPreExistingEntity(object);
@@ -64,40 +64,39 @@ public abstract class AbstractWsController<T, E> implements WsController<T> {
             throw new PreExistingEntityException("Entity already exists.");
         }
 
-        E entity = convertDO(object);
+        E entity = convertToEntity(object);
         getJpaController().create(entity);
         return (int) getJpaController().getPrimaryKey(entity);
     }
 
     @Override
-    public T get(int id) throws Exception {
-        E entity = getJpaController().find(id);
+    public T get(Object id) throws Exception {
+        E entity = getJpaController().findByPrimaryKey(id);
         if (entity == null) {
             throw new NonExistingEntityException(NON_EXISTING_ENTITY_ERROR + id);
         }
 
-        return convertEntity(entity, true);
+        return convertToDO(entity, true);
     }
 
     @Override
-    public void put(int id, T object) throws Exception {
-        E entity = getJpaController().find(id);
+    public void put(Object id, T object) throws Exception {
+        E entity = getJpaController().findByPrimaryKey(id);
         if (entity == null) {
             throw new NonExistingEntityException(NON_EXISTING_ENTITY_ERROR + id);
         }
 
-        entity = convertDO(object, entity);
+        entity = convertToEntity(object, entity);
         getJpaController().update(entity);
     }
 
     @Override
-    public void delete(int id) throws Exception {
-        E entity = getJpaController().find(id);
+    public void delete(Object id) throws Exception {
+        E entity = getJpaController().findByPrimaryKey(id);
         if (entity == null) {
             throw new NonExistingEntityException(NON_EXISTING_ENTITY_ERROR + id);
         }
 
         getJpaController().delete(entity);
     }
-
 }

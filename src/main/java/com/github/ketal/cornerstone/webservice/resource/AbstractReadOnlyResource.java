@@ -16,24 +16,19 @@
  */
 package com.github.ketal.cornerstone.webservice.resource;
 
-import java.net.URI;
-
-import javax.validation.Valid;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import com.github.ketal.cornerstone.webservice.controller.WsController;
+import com.github.ketal.cornerstone.webservice.util.WSResponse;
 
-public abstract class AbstractResource<T, E extends WsController<T>> extends AbstractReadOnlyResource<T, E> {
+public abstract class AbstractReadOnlyResource<T, E extends WsController<T>> {
 
     @Context
     protected Request request;
@@ -45,25 +40,9 @@ public abstract class AbstractResource<T, E extends WsController<T>> extends Abs
 
     protected abstract E getController();
 
-    @POST
-    public Response post(@Valid T object) throws Exception {
-        int id = getController().post(object);
-        URI location = UriBuilder.fromUri(uri.getBaseUri()).path(this.getUriPath()).path(Integer.toString(id)).build();
-        return Response.created(location).build();
-    }
-
-    @PUT
+    @GET
     @Path("{id: [a-zA-Z0-9]*}")
-    public Response put(@PathParam("id") String id, @Valid T object) throws Exception {
-        getController().put(id, object);
-        return Response.noContent().build();
+    public Response get(@PathParam("id") String id) throws Exception {
+        return WSResponse.response(request, getController().get(id), Status.OK);
     }
-
-    @DELETE
-    @Path("{id: [a-zA-Z0-9]*}")
-    public Response delete(@PathParam("id") String id) throws Exception {
-        getController().delete(id);
-        return Response.status(Status.NO_CONTENT).build();
-    }
-
 }
