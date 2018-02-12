@@ -16,9 +16,15 @@
  */
 package com.github.ketal.cornerstone.webservice.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import com.github.ketal.cornerstone.persistence.jpa.controller.JpaController;
+import com.github.ketal.cornerstone.webservice.exception.JsonConstraintViolation;
 import com.github.ketal.cornerstone.webservice.exception.NonExistingEntityException;
 import com.github.ketal.cornerstone.webservice.exception.PreExistingEntityException;
 
@@ -85,7 +91,16 @@ public abstract class AbstractWsController<T, E> implements WsController<T> {
         if (entity == null) {
             throw new NonExistingEntityException(NON_EXISTING_ENTITY_ERROR + id);
         }
-
+        
+        Object primaryKey = getJpaController().getPrimaryKey(convertToEntity(object));
+        
+        if(!getJpaController().convertToPrimaryKeyType(id).equals(primaryKey)) {
+            Set<ConstraintViolation<T>> constraints = new HashSet<>();
+            constraints.add(new JsonConstraintViolation<T>(object, 
+                    "Missing Primary Key field in provided json object or it does not match your URI '" + id + "'", "", String.valueOf(id)));
+            throw new ConstraintViolationException(constraints);
+        }
+        
         entity = convertToEntity(object, entity);
         getJpaController().update(entity);
     }
